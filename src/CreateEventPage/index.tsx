@@ -110,21 +110,21 @@ function CreateEventPage() {
         </>
       )}
       <div className="CreateEventPage-button-wrapper">
-        <ButtonGroup size="lg" vertical>
+        <div className="CreateEventPage-button-group">
           {searchResult &&
             (transportMode !== null ? (
-              <Button variant="primary" onClick={handleContinueClick}>
+              <Button size="lg" variant="primary" onClick={handleContinueClick}>
                 Continue
               </Button>
             ) : (
-              <Button variant="warning" onClick={handleContinueClick}>
+              <Button size="lg" variant="warning" onClick={handleContinueClick}>
                 Continue without a mode
               </Button>
             ))}
-          <Button variant="link" onClick={handleCancelClick}>
+          <Button size="lg" variant="link" onClick={handleCancelClick}>
             Cancel
           </Button>
-        </ButtonGroup>
+        </div>
       </div>
       {!searchResult && <RecentEvents onSelect={handleRecentEventSelect} />}
     </>

@@ -36,7 +36,7 @@
 
 .SearchBar-suggestion-text--main {
   display: block;
-  font-size: 12pt;
+  font-size: 14pt;
 }
 
 .SearchBar-suggestion-text--secondary {
@@ -45,7 +45,7 @@
 }
 
 .SearchBar-suggestion-icon {
-  font-size: 16pt;
+  font-size: 14pt;
   display: flex;
   justify-content: center;
   align-items: center;

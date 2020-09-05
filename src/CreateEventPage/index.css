@@ -1,7 +1,12 @@
 .CreateEventPage-button-wrapper {
   width: 100%;
   position: fixed;
-  bottom: 50px;
+  bottom: 30px;
   display: flex;
   justify-content: center;
+}
+
+.CreateEventPage-button-group {
+  display: flex;
+  flex-direction: column;
 }

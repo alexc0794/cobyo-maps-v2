@@ -1,0 +1,23 @@
+.ActiveEvents {
+  margin: 10px 10px 40px;
+}
+
+.ActiveEvents-header {
+  font-size: 14pt;
+  color: lightgrey;
+}
+
+.ActiveEvents-event {
+  width: 100%;
+  margin: 0 0 10px;
+  text-align: left;
+}
+
+.ActiveEvents-event-name {
+  margin: 0 0 5px;
+  font-size: 16pt;
+}
+
+.ActiveEvents-event-description {
+  font-size: 12pt;
+}

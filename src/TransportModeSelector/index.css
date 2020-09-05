@@ -1,0 +1,38 @@
+.TransportModeSelector {
+  display: flex;
+  flex-direction: column;
+}
+
+.TransportModeSelector-mode-wrapper {
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.TransportModeSelector-mode {
+  background-color: black;
+  width: 100%;
+  display: flex;
+}
+
+.TransportModeSelector-mode > div {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.TransportModeSelector-mode-icon {
+  font-size: 20pt;
+  justify-content: center;
+  width: 15%;
+}
+
+.TransportModeSelector-mode-name {
+  width: 50%;
+  justify-content: flex-start;
+  /* align-self: flex-start; */
+}
+
+.TransportModeSelector-mode-details {
+  min-width: 35%;
+  justify-content: flex-end;
+}

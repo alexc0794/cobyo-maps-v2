@@ -7,6 +7,7 @@ import { faCar, faSubway, faWalking } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { usePosition } from "use-position";
 
+import useGoogleMaps from "../hooks/useGoogleMaps";
 import { TransportMode } from "../interfaces";
 import lyftLogo from "../images/lyft-logo.png";
 import "./index.css";
@@ -154,11 +155,12 @@ function TransportModeDetails({
     setDurationInMs(durationInMs);
   }
 
+  const isGoogleLoaded = useGoogleMaps();
   useEffect(() => {
-    if (latitude && longitude && googlePlaceId) {
+    if (isGoogleLoaded && latitude && longitude && googlePlaceId) {
       calculateDistance(transportMode, latitude, longitude, googlePlaceId);
     }
-  }, [transportMode, latitude, longitude, googlePlaceId]);
+  }, [transportMode, latitude, longitude, googlePlaceId, isGoogleLoaded]);
 
   return (
     <div>

@@ -8,12 +8,16 @@
   outline: none;
   margin: 20px 10px;
   border-radius: 5px;
-  font-size: 12pt;
-  padding: 5px;
+  font-size: 14pt;
+  padding: 10px;
+}
+
+.SearchBar-suggestions {
+  margin: 0 10px 10px;
 }
 
 .SearchBar-suggestion-wrapper {
-  margin: 10px;
+  margin: 5px 0;
 }
 
 .SearchBar-suggestion {

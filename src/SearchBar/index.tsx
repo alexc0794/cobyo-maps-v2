@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes, { InferProps } from "prop-types";
-import PlacesAutocomplete from "react-places-autocomplete";
-import loadGoogleMapsAPI from "load-google-maps-api";
+import PlacesAutocomplete, {
+  geocodeByPlaceId,
+  getLatLng,
+  Suggestion
+} from "react-places-autocomplete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBook,
@@ -16,6 +19,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
+import useGoogleMaps from "../hooks/useGoogleMaps";
+import { Place } from "../interfaces";
 import "./index.css";
 
 const GOOGLE_PLACE_TYPES_TO_IGNORE: Array<string> = [
@@ -48,20 +53,8 @@ function SearchBar({
   onClick,
   onSelect
 }: InferProps<typeof SearchBar.propTypes>) {
-  const [isGoogleLoaded, setGoogleLoaded] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
-
-  useEffect(() => {
-    async function load() {
-      const key = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "";
-      await loadGoogleMapsAPI({
-        key,
-        libraries: ["places"]
-      });
-      setGoogleLoaded(true);
-    }
-    load();
-  }, []);
+  const isGoogleLoaded = useGoogleMaps();
 
   useEffect(() => {
     setSearchTerm(initialSearchTerm);
@@ -71,15 +64,33 @@ function SearchBar({
     return null;
   }
 
+  async function handleSelect(
+    address: string,
+    googlePlaceId: string,
+    suggestion?: Suggestion
+  ) {
+    console.log(address, googlePlaceId, suggestion);
+    const results = await geocodeByPlaceId(googlePlaceId);
+    const { lat, lng } = await getLatLng(results[0]);
+    setSearchTerm(address);
+    const place: Place = {
+      latitude: lat,
+      longitude: lng,
+      googlePlaceId
+    };
+    if (suggestion) {
+      place.mainText = suggestion.formattedSuggestion.mainText;
+      place.secondaryText = suggestion.formattedSuggestion.secondaryText;
+    }
+    onSelect(address, place);
+  }
+
   return (
     <div onClick={onClick}>
       <PlacesAutocomplete
         value={searchTerm}
         onChange={value => setSearchTerm(value)}
-        onSelect={(name: string, googlePlaceId: string) => {
-          setSearchTerm(name);
-          onSelect(name, googlePlaceId);
-        }}
+        onSelect={handleSelect}
       >
         {({
           getInputProps,
@@ -103,7 +114,7 @@ function SearchBar({
                   autoFocus: autoFocus
                 })}
               />
-              <div>
+              <div className="SearchBar-suggestions">
                 {suggestions.map(suggestion => {
                   const icon: IconDefinition | null = suggestion.types.length
                     ? GOOGLE_PLACE_TYPE_TO_ICON[suggestion.types[0]]

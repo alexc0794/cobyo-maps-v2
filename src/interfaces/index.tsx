@@ -9,17 +9,18 @@ export enum TransportMode {
 
 // Place - the entity representing an event location
 export interface Place {
-  address: string; // Human readable address description
   latitude: number;
   longitude: number;
   googlePlaceId?: string;
+  mainText?: string;
+  secondaryText?: string;
 }
 
 export interface EventUser {
   name: string;
   lastUpdatedMs: number;
   transportMode: TransportMode;
-  etaMs?: number;
+  etaMs: number | null;
   isOnTheWay?: boolean;
 }
 
@@ -29,9 +30,9 @@ export interface Event {
   name: string;
   eventUsers: Array<EventUser>;
   createdAtMs: number;
-  scheduledForMs?: number;
-  endedAtMs?: number;
-  place?: Place;
+  scheduledForMs: number | null;
+  endedAtMs: number | null;
+  place: Place | null; // TODO: Do we want this to be nullable?
 }
 
 // LocallyStoredEvent [private] - the event metadata to be stored in browser's local storage
@@ -40,7 +41,7 @@ interface LocallyStoredEvent {
   name: string;
   scheduledForMs: number;
   transportMode: string; // Local storage won't recognize enums so save as string
-  googlePlaceId: string;
+  place: Place;
 }
 
 // RecentEvent - the event metadata from a recently attended event stored in local storage

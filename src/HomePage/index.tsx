@@ -17,9 +17,17 @@ function HomePage() {
   }
 
   function handleRecentEventSelect(recentEvent: RecentEvent) {
-    const queryString = `searchTerm=${encodeURIComponent(
+    const placeQueryString = Object.keys(recentEvent.place)
+      .map(
+        (key: string) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(
+            (recentEvent.place as any)[key]
+          )}`
+      )
+      .join("&");
+    const queryString = `name=${encodeURIComponent(
       recentEvent.name
-    )}&placeId=${encodeURIComponent(recentEvent.googlePlaceId)}`;
+    )}&${placeQueryString}`;
     history.push(`/create?${queryString}`);
   }
 

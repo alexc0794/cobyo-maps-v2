@@ -1,40 +1,65 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { Location } from "history";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import SearchBar from "../SearchBar";
 import TransportModeSelector from "../TransportModeSelector";
 import RecentEvents from "../RecentEvents";
-import { TransportMode, RecentEvent } from "../interfaces";
+import { TransportMode, RecentEvent, Place } from "../interfaces";
 import "./index.css";
 
 interface SearchResult {
   name: string;
-  googlePlaceId: string;
+  place: Place;
+}
+
+function getQuerySearchResult(location: Location): SearchResult | null {
+  const query = new URLSearchParams(location.search);
+  const name = query.get("name");
+  const latitude = query.get("latitude");
+  const longitude = query.get("longitude");
+  const googlePlaceId = query.get("googlePlaceId");
+
+  if (
+    name === null ||
+    latitude === null ||
+    isNaN(parseFloat(latitude)) ||
+    longitude === null ||
+    isNaN(parseFloat(longitude)) ||
+    googlePlaceId === null
+  ) {
+    return null;
+  }
+
+  return {
+    name,
+    place: {
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
+      googlePlaceId: googlePlaceId as string
+    }
+  };
 }
 
 function CreateEventPage() {
   const history = useHistory();
-  const query = new URLSearchParams(useLocation().search);
-  const querySearchTerm = query.get("searchTerm");
-  const queryPlaceId = query.get("placeId");
+  const querySearchResult: SearchResult | null = getQuerySearchResult(
+    useLocation()
+  );
+
   const [initialSearchTerm, setInitialSearchTerm] = useState<string>(
-    querySearchTerm || ""
+    querySearchResult ? querySearchResult.name : ""
   );
   const [searchResult, setSearchResult] = useState<SearchResult | null>(
-    querySearchTerm && queryPlaceId
-      ? {
-          name: querySearchTerm,
-          googlePlaceId: queryPlaceId
-        }
-      : null
+    querySearchResult
   );
   const [transportMode, setTransportMode] = useState<TransportMode | null>(
     null
   );
 
-  function handleSearchBarSelect(name: string, googlePlaceId: string) {
+  function handleSearchBarSelect(name: string, place: Place) {
     if (document.activeElement) {
       try {
         (document.activeElement as HTMLElement).blur();
@@ -42,7 +67,7 @@ function CreateEventPage() {
         console.error(error);
       }
     }
-    setSearchResult({ name, googlePlaceId });
+    setSearchResult({ name, place });
   }
 
   function handleTransportModeSelect(transportMode: TransportMode) {
@@ -62,7 +87,7 @@ function CreateEventPage() {
   function handleRecentEventSelect(recentEvent: RecentEvent) {
     const searchResult: SearchResult = {
       name: recentEvent.name,
-      googlePlaceId: recentEvent.googlePlaceId
+      place: recentEvent.place
     };
     // No need to assume inheritance of the transport mode
     setSearchResult(searchResult);
@@ -79,7 +104,7 @@ function CreateEventPage() {
       {searchResult && (
         <>
           <TransportModeSelector
-            googlePlaceId={searchResult.googlePlaceId}
+            googlePlaceId={searchResult.place.googlePlaceId}
             onSelect={handleTransportModeSelect}
           />
         </>

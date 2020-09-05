@@ -3,8 +3,10 @@
 }
 
 .RecentEvents-header {
-  font-size: 14pt;
+  font-size: 16pt;
+  font-weight: bold;
   color: lightgrey;
+  margin-bottom: 10px;
 }
 
 .RecentEvents-event {

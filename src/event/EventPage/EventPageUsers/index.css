@@ -8,6 +8,12 @@
   max-width: 50%;
 }
 
+.EventPageUsers-group-header {
+  font-size: 12pt;
+  margin: 10px;
+  color: lightgrey;
+}
+
 .EventPageUsers-cell {
   display: flex;
   margin: 10px;

@@ -3,24 +3,13 @@ import PropTypes, { InferProps } from "prop-types";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCar, faSubway, faWalking } from "@fortawesome/free-solid-svg-icons";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { usePosition } from "use-position";
 
 import useGoogleMaps from "../hooks/useGoogleMaps";
 import { getDistance } from "../helpers";
 import { TransportMode } from "../interfaces";
-import lyftLogo from "../images/lyft-logo.png";
+import { TRANSPORT_MODE_TO_ICON } from "../constants";
 import "./index.css";
-
-const TRANPSORT_MODE_TO_ICON: {
-  [Key in TransportMode]: IconDefinition | string | null;
-} = {
-  [TransportMode.Walk]: faWalking,
-  [TransportMode.Car]: faCar,
-  [TransportMode.Transit]: faSubway,
-  [TransportMode.Lyft]: lyftLogo
-};
 
 function TransportModeSelector({
   initiallySelectedTransportMode,
@@ -48,7 +37,7 @@ function TransportModeSelector({
       {modes.map((mode: string) => {
         const transportMode = TransportMode[mode as keyof typeof TransportMode];
         const isSelected = selectedTransportMode === transportMode;
-        const icon = TRANPSORT_MODE_TO_ICON[transportMode];
+        const icon = TRANSPORT_MODE_TO_ICON[transportMode];
         return (
           <div key={mode} className="TransportModeSelector-mode-wrapper">
             <Button

@@ -5,32 +5,32 @@ export const MOCK_EVENT: Event = {
   name: "Mission NYC",
   eventUsers: [
     {
-      name: "Isabel",
+      name: "Donald Trump",
       lastUpdatedMs: new Date().getTime() - 30 * 60 * 1000, // Updated 30 minutes ago
-      transportMode: TransportMode.Walk,
+      transportMode: TransportMode.Lyft,
       etaMs: new Date().getTime() + 60 * 60 * 1000 // 1 hour away
     },
     {
-      name: "Jay",
+      name: "Joe Biden",
       lastUpdatedMs: new Date().getTime() - 15 * 60 * 1000, // Updated 15 minutes ago
       transportMode: TransportMode.Car,
       etaMs: null
     },
     {
-      name: "Sungseob Whang",
+      name: "Alegs Chow",
       lastUpdatedMs: new Date().getTime() - 5 * 60 * 1000, // Updated 5 minutes ago
-      transportMode: TransportMode.Transit,
+      transportMode: TransportMode.Walk,
       etaMs: new Date().getTime() + 15 * 60 * 1000 // 15 minutes away
     },
     {
-      name: "Denis Huang",
+      name: "Elon Musk",
       lastUpdatedMs: new Date().getTime() - 15 * 60 * 1000, // Updated 1 minutes ago
       transportMode: TransportMode.Car,
       etaMs: new Date().getTime() - 5 * 60 * 1000 // should have arrived 5 minutes ago
     }
   ],
   createdAtMs: new Date().getTime() - 10 * 60 * 1000,
-  scheduledForMs: new Date().getTime() + 10 * 60 * 1000, // Event happening in 10 minutes
+  scheduledForMs: new Date().getTime() + 11 * 60 * 1000, // Event happening in 10 minutes
   endedAtMs: null,
   place: {
     latitude: 40.7480046,

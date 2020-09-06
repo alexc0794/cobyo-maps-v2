@@ -19,7 +19,7 @@ export interface Place {
 export interface EventUser {
   name: string;
   lastUpdatedMs: number;
-  transportMode: TransportMode;
+  transportMode: TransportMode | null;
   etaMs: number | null;
   isOnTheWay?: boolean;
 }

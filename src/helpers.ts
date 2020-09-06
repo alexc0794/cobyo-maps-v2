@@ -6,6 +6,7 @@ export function getDistance(
   lng: number,
   placeId: string
 ): Promise<number> {
+  // WARNING: This map is put inside a function because it depends on Google to be loaded
   const TRANSPORT_MODE_TO_TRAVEL_MODE = {
     [TransportMode.Walk]: window.google.maps.TravelMode.WALKING,
     [TransportMode.Car]: window.google.maps.TravelMode.DRIVING,

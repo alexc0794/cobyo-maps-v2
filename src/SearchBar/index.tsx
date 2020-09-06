@@ -114,38 +114,40 @@ function SearchBar({
                   autoFocus: autoFocus
                 })}
               />
-              <div className="SearchBar-suggestions">
-                {suggestions.map(suggestion => {
-                  const icon: IconDefinition | null = suggestion.types.length
-                    ? GOOGLE_PLACE_TYPE_TO_ICON[suggestion.types[0]]
-                    : null;
-                  return (
-                    <div
-                      {...getSuggestionItemProps(suggestion)}
-                      key={suggestion.description}
-                      className="SearchBar-suggestion-wrapper"
-                    >
-                      <div className="SearchBar-suggestion">
-                        <div className="SearchBar-suggestion-content">
-                          <div className="SearchBar-suggestion-text">
-                            <span className="SearchBar-suggestion-text--main">
-                              {suggestion.formattedSuggestion.mainText}
-                            </span>
-                            <span className="SearchBar-suggestion-text--secondary">
-                              {suggestion.formattedSuggestion.secondaryText}
-                            </span>
-                          </div>
-                          {icon && (
-                            <div className="SearchBar-suggestion-icon">
-                              <FontAwesomeIcon icon={icon} />
+              {suggestions.length > 0 && (
+                <div className="SearchBar-suggestions">
+                  {suggestions.map(suggestion => {
+                    const icon: IconDefinition | null = suggestion.types.length
+                      ? GOOGLE_PLACE_TYPE_TO_ICON[suggestion.types[0]]
+                      : null;
+                    return (
+                      <div
+                        {...getSuggestionItemProps(suggestion)}
+                        key={suggestion.description}
+                        className="SearchBar-suggestion-wrapper"
+                      >
+                        <div className="SearchBar-suggestion">
+                          <div className="SearchBar-suggestion-content">
+                            <div className="SearchBar-suggestion-text">
+                              <span className="SearchBar-suggestion-text--main">
+                                {suggestion.formattedSuggestion.mainText}
+                              </span>
+                              <span className="SearchBar-suggestion-text--secondary">
+                                {suggestion.formattedSuggestion.secondaryText}
+                              </span>
                             </div>
-                          )}
+                            {icon && (
+                              <div className="SearchBar-suggestion-icon">
+                                <FontAwesomeIcon icon={icon} />
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         }}

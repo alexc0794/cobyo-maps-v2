@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 
 import { Event } from "../../../interfaces";
@@ -8,7 +8,7 @@ const TEN_MINUTES_IN_MS = 10 * 60 * 1000;
 
 function EventPageTimer({ event }: EventPageTimerProps) {
   const scheduledForMs = event.scheduledForMs;
-  const nowMs = new Date().getTime();
+  const [nowMs, setNowMs] = useState<number>(new Date().getTime());
 
   function getAlertVariant(
     scheduledForMs: number | null,
@@ -33,18 +33,20 @@ function EventPageTimer({ event }: EventPageTimerProps) {
     if (scheduledForMs === null) {
       return "An ETA has not been set.";
     }
-    const diffInMs = scheduledForMs - nowMs;
-    const diffInMinutes = Math.round(diffInMs / 1000 / 60);
-
-    // if (diffInMinutes > 5) {
-    //   const scheduledForDate = new Date(scheduledForMs);
-    //   const hour = scheduledForDate.getHours();
-    //   const minute = scheduledForDate.getMinutes();
-    //   return `Arrive by ${hour}:${minute}`;
-    // }
-
-    return `Event is scheduled to begin in ${diffInMinutes} min.`;
+    const diffInSeconds = Math.round((scheduledForMs - nowMs) / 1000);
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    const remainingSeconds = Math.round(diffInSeconds % 60);
+    return `Event is scheduled to begin in ${diffInMinutes}:${
+      remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds
+    }.`;
   }
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setNowMs(new Date().getTime());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Alert variant={getAlertVariant(scheduledForMs, nowMs)}>

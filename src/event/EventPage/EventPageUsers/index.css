@@ -1,0 +1,45 @@
+.EventPageUsers {
+  display: flex;
+  align-content: stretch;
+}
+
+.EventPageUsers-group {
+  flex-grow: 1;
+  max-width: 50%;
+}
+
+.EventPageUsers-cell {
+  display: flex;
+  margin: 10px;
+}
+
+.EventPageUsers-rank {
+  /* padding: 10px 5px 0 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20pt;
+  padding: 0 5px 0 0;
+}
+
+.EventPageUsers-card {
+  flex-grow: 1;
+  background-color: #343a40; /* Same color as React boostrap button dark */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0 rgba(0, 0, 0, 0.02);
+}
+
+.EventPageUsers-card-content {
+  padding: 10px;
+}
+
+.EventPageUsers-card-title {
+  font-size: 12pt;
+}
+
+.EventPageUsers-card-description {
+  font-size: 10pt;
+}
+
+.EventPageUsers-card-actions {
+  border-top: 1px solid rgb(34, 34, 34); /* Same as page's background color */
+}

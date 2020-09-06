@@ -3,9 +3,34 @@ import { Event, ActiveEvent, RecentEvent, TransportMode } from "../interfaces";
 export const MOCK_EVENT: Event = {
   eventId: "1",
   name: "Mission NYC",
-  eventUsers: [],
+  eventUsers: [
+    {
+      name: "Isabel",
+      lastUpdatedMs: new Date().getTime() - 30 * 60 * 1000, // Updated 30 minutes ago
+      transportMode: TransportMode.Walk,
+      etaMs: new Date().getTime() + 60 * 60 * 1000 // 1 hour away
+    },
+    {
+      name: "Jay",
+      lastUpdatedMs: new Date().getTime() - 15 * 60 * 1000, // Updated 15 minutes ago
+      transportMode: TransportMode.Car,
+      etaMs: null
+    },
+    {
+      name: "Sungseob Whang",
+      lastUpdatedMs: new Date().getTime() - 5 * 60 * 1000, // Updated 5 minutes ago
+      transportMode: TransportMode.Transit,
+      etaMs: new Date().getTime() + 15 * 60 * 1000 // 15 minutes away
+    },
+    {
+      name: "Denis Huang",
+      lastUpdatedMs: new Date().getTime() - 15 * 60 * 1000, // Updated 1 minutes ago
+      transportMode: TransportMode.Car,
+      etaMs: new Date().getTime() - 5 * 60 * 1000 // should have arrived 5 minutes ago
+    }
+  ],
   createdAtMs: new Date().getTime() - 10 * 60 * 1000,
-  scheduledForMs: new Date().getTime() + 10 * 60 * 1000,
+  scheduledForMs: new Date().getTime() + 10 * 60 * 1000, // Event happening in 10 minutes
   endedAtMs: null,
   place: {
     latitude: 40.7480046,

@@ -34,7 +34,21 @@ function EventPageTimer({ event }: EventPageTimerProps) {
       return "An ETA has not been set.";
     }
     const diffInSeconds = Math.round((scheduledForMs - nowMs) / 1000);
-    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    const diffInMinutes =
+      diffInSeconds > 0
+        ? Math.floor(diffInSeconds / 60)
+        : Math.ceil(diffInSeconds / 60);
+
+    if (diffInSeconds < 0) {
+      if (diffInMinutes === 0) {
+        return `Event just started.`;
+      }
+
+      return `Event started ${Math.abs(diffInMinutes)} minute${
+        Math.abs(diffInMinutes) === 1 ? "" : "s"
+      } ago.`;
+    }
+
     const remainingSeconds = Math.round(diffInSeconds % 60);
     return `Event is scheduled to begin in ${diffInMinutes}:${
       remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds

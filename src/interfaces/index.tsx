@@ -1,3 +1,8 @@
+export interface Position {
+  latitude: number;
+  longitude: number;
+}
+
 // TransportMode - types of modes a user can choose to use for transportation
 export enum TransportMode {
   Walk,
@@ -9,8 +14,7 @@ export enum TransportMode {
 
 // Place - the entity representing an event location
 export interface Place {
-  latitude: number;
-  longitude: number;
+  position: Position;
   googlePlaceId?: string;
   mainText?: string;
   secondaryText?: string;
@@ -23,6 +27,8 @@ export interface EventUser {
   etaMs: number | null;
   isOnTheWay?: boolean;
   phoneNumber?: string;
+  position?: Position; // Not everyone may allow for position to be shared
+  profilePicUrl?: string;
 }
 
 // Event - the entity representing an organized event attended by users

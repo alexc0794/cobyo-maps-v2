@@ -21,7 +21,13 @@ export const MOCK_EVENT: Event = {
       lastUpdatedMs: new Date().getTime() - 5 * 60 * 1000, // Updated 5 minutes ago
       transportMode: TransportMode.Walk,
       etaMs: new Date().getTime() + 15 * 60 * 1000, // 15 minutes away
-      phoneNumber: "7034720567"
+      phoneNumber: "7034720567",
+      position: {
+        latitude: 40.759116,
+        longitude: -73.9964225
+      },
+      profilePicUrl:
+        "https://scontent-lga3-2.xx.fbcdn.net/v/t1.0-1/cp0/p60x60/27066944_10215766331491504_3714665914039678592_n.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=_CdxB0PqhEgAX-8pQEV&_nc_ht=scontent-lga3-2.xx&oh=0afd524b2647d229fc8b66b28c5d9e69&oe=5F7A7B33"
     },
     {
       name: "Elon Musk",
@@ -31,11 +37,13 @@ export const MOCK_EVENT: Event = {
     }
   ],
   createdAtMs: new Date().getTime() - 10 * 60 * 1000,
-  scheduledForMs: new Date().getTime() + 11 * 60 * 1000, // Event happening in 10 minutes
+  scheduledForMs: new Date().getTime() + 0.1 * 60 * 1000, // Event happening in 10 seconds
   endedAtMs: null,
   place: {
-    latitude: 40.7480046,
-    longitude: -73.9969309,
+    position: {
+      latitude: 40.7480046,
+      longitude: -73.9969309
+    },
     googlePlaceId: "ChIJs-E1jKlZwokR5hN4X81BDuU",
     mainText: "Mission NYC",
     secondaryText: "West 28th Street, New York, NY, USA"
@@ -54,8 +62,10 @@ export const MOCK_ACTIVE_EVENT: ActiveEvent = {
   scheduledForMs: new Date().getTime() + 10 * 60 * 1000,
   transportMode: "Transit",
   place: {
-    latitude: 40.7480046,
-    longitude: -73.9969309,
+    position: {
+      latitude: 40.7480046,
+      longitude: -73.9969309
+    },
     googlePlaceId: "ChIJs-E1jKlZwokR5hN4X81BDuU"
   }
 };
@@ -72,8 +82,10 @@ export const MOCK_RECENT_EVENTS: Array<RecentEvent> = [
     scheduledForMs: new Date().getTime() - 10 * 60 * 1000,
     transportMode: "Car",
     place: {
-      latitude: 0,
-      longitude: 0,
+      position: {
+        latitude: 0,
+        longitude: 0
+      },
       googlePlaceId: "ChIJE38rC01YwokRKx7NOG9qSVA"
     }
   },
@@ -83,8 +95,10 @@ export const MOCK_RECENT_EVENTS: Array<RecentEvent> = [
     scheduledForMs: new Date().getTime() - 60 * 60 * 1000,
     transportMode: "Walk",
     place: {
-      latitude: 0,
-      longitude: 0,
+      position: {
+        latitude: 0,
+        longitude: 0
+      },
       googlePlaceId: "ChIJtU1Cg4lfwokRs2aWDmbEL3c"
     }
   },
@@ -94,8 +108,10 @@ export const MOCK_RECENT_EVENTS: Array<RecentEvent> = [
     scheduledForMs: new Date().getTime() - 24 * 60 * 60 * 1000,
     transportMode: "Lyft",
     place: {
-      latitude: 0,
-      longitude: 0,
+      position: {
+        latitude: 0,
+        longitude: 0
+      },
       googlePlaceId: "ChIJmQJIxlVYwokRLgeuocVOGVU"
     }
   }

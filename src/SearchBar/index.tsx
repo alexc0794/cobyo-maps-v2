@@ -74,8 +74,10 @@ function SearchBar({
     const { lat, lng } = await getLatLng(results[0]);
     setSearchTerm(address);
     const place: Place = {
-      latitude: lat,
-      longitude: lng,
+      position: {
+        latitude: lat,
+        longitude: lng
+      },
       googlePlaceId
     };
     if (suggestion) {

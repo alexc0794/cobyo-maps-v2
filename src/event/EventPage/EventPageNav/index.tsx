@@ -18,11 +18,19 @@ function EventPageNav() {
     history.push(`${match.url}/${tab}`);
   }
 
+  const defaultActiveKey = (() => {
+    // A little hack to set the correct tab to active if the tab name is found in the URL
+    const tab = TABS.find(tab =>
+      window.location.href.includes(tab.toLowerCase())
+    );
+    return tab || DEFAULT_TAB;
+  })();
+
   return (
     <Nav
       variant="pills"
       className="EventPageNav"
-      defaultActiveKey={DEFAULT_TAB}
+      defaultActiveKey={defaultActiveKey}
     >
       {TABS.map(tab => (
         <Nav.Item key={tab}>

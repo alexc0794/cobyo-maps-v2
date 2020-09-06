@@ -35,8 +35,10 @@ function getQuerySearchResult(location: Location): SearchResult | null {
   return {
     name,
     place: {
-      latitude: parseFloat(latitude),
-      longitude: parseFloat(longitude),
+      position: {
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude)
+      },
       googlePlaceId: googlePlaceId as string
     }
   };

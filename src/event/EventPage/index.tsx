@@ -12,6 +12,7 @@ import EventPageHeader from "./EventPageHeader";
 import EventPageNav from "./EventPageNav";
 import EventPageSchedule from "./EventPageSchedule";
 import EventPageUsers from "./EventPageUsers";
+import EventPageMap from "./EventPageMap";
 import { Event } from "../../interfaces";
 import { MOCK_EVENT } from "../../mocks";
 import "./index.css";
@@ -44,7 +45,9 @@ function EventPage() {
           <EventPageHeader event={event} />
           <EventPageNav />
           <Switch>
-            <Route exact path={`${match.path}/map`}></Route>
+            <Route exact path={`${match.path}/map`}>
+              <EventPageMap event={event} />
+            </Route>
             <Route exact path={`${match.path}/about`}>
               <EventPageSchedule event={event} />
               <EventPageUsers event={event} />

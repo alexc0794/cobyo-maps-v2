@@ -32,7 +32,7 @@ export interface Event {
   createdAtMs: number;
   scheduledForMs: number | null;
   endedAtMs: number | null;
-  place: Place | null; // TODO: Do we want this to be nullable?
+  place: Place; // TODO: Do we want this to be nullable?
 }
 
 // LocallyStoredEvent [private] - the event metadata to be stored in browser's local storage

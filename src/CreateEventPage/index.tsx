@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Location } from "history";
 import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import SearchBar from "../SearchBar";
 import TransportModeSelector from "../TransportModeSelector";

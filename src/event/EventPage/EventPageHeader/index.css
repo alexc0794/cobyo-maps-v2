@@ -1,0 +1,17 @@
+.EventPageHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px;
+  /* border-bottom: 2px solid grey; */
+}
+
+.EventPageHeader--header {
+  /* margin: 10px; */
+  font-size: 24pt;
+}
+
+.EventPageHeader--subheader {
+  font-size: 12pt;
+}

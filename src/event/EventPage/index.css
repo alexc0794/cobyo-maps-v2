@@ -1,13 +1,2 @@
 .EventPage {
-  margin: 10px;
-}
-
-.EventPage-header-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-.EventPage-header {
-  margin: 10px;
-  font-size: 24pt;
 }

@@ -1,0 +1,35 @@
+.EventPageSchedule {
+  display: flex;
+  align-content: stretch;
+  margin: 10px;
+}
+
+.EventPageScheduleItem {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 10px;
+  max-width: 50%;
+}
+
+.EventPageScheduleItem-title {
+  font-size: 10pt;
+  margin-bottom: 30px;
+  color: lightgrey;
+}
+
+.EventPageScheduleItem-spinner {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.EventPageScheduleItem-date {
+  font-size: 14pt;
+  margin: 0;
+}
+
+.EventPageScheduleItem-time {
+  font-size: 24pt;
+  margin: 0;
+}

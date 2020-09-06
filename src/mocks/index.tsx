@@ -10,7 +10,9 @@ export const MOCK_EVENT: Event = {
   place: {
     latitude: 40.7480046,
     longitude: -73.9969309,
-    googlePlaceId: "ChIJs-E1jKlZwokR5hN4X81BDuU"
+    googlePlaceId: "ChIJs-E1jKlZwokR5hN4X81BDuU",
+    mainText: "Mission NYC",
+    secondaryText: "West 28th Street, New York, NY, USA"
   }
 };
 

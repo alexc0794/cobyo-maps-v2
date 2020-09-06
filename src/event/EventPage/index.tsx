@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {
+  Switch,
+  Redirect,
+  Route,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
 
+import EventPageTimer from "./EventPageTimer";
+import EventPageHeader from "./EventPageHeader";
+import EventPageNav from "./EventPageNav";
+import EventPageSchedule from "./EventPageSchedule";
 import { Event } from "../../interfaces";
 import { MOCK_EVENT } from "../../mocks";
 import "./index.css";
@@ -22,14 +32,25 @@ function EventPage() {
     loadEvent(eventId);
   }, [eventId]);
 
+  let match = useRouteMatch();
+
   return (
     <div className="EventPage">
       {!event && <p>Loading</p>}
       {event && (
         <>
-          <div className="EventPage-header-wrapper">
-            <h2 className="EventPage-header">{event.name}</h2>
-          </div>
+          <EventPageTimer event={event} />
+          <EventPageHeader event={event} />
+          <EventPageNav />
+          <Switch>
+            <Route exact path={`${match.path}/map`}></Route>
+            <Route exact path={`${match.path}/about`}>
+              <EventPageSchedule event={event} />
+            </Route>
+            <Route>
+              <Redirect to={`${match.url}/about`} />
+            </Route>
+          </Switch>
         </>
       )}
     </div>

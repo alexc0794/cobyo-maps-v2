@@ -22,6 +22,7 @@ export interface EventUser {
   transportMode: TransportMode | null;
   etaMs: number | null;
   isOnTheWay?: boolean;
+  phoneNumber?: string;
 }
 
 // Event - the entity representing an organized event attended by users

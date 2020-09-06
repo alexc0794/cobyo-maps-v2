@@ -20,7 +20,8 @@ export const MOCK_EVENT: Event = {
       name: "Alegs Chow",
       lastUpdatedMs: new Date().getTime() - 5 * 60 * 1000, // Updated 5 minutes ago
       transportMode: TransportMode.Walk,
-      etaMs: new Date().getTime() + 15 * 60 * 1000 // 15 minutes away
+      etaMs: new Date().getTime() + 15 * 60 * 1000, // 15 minutes away
+      phoneNumber: "7034720567"
     },
     {
       name: "Elon Musk",

@@ -1,4 +1,4 @@
-import { Event, ActiveEvent, RecentEvent } from "../interfaces";
+import { Event, ActiveEvent, RecentEvent, TransportMode } from "../interfaces";
 
 export const MOCK_EVENT: Event = {
   eventId: "1",
@@ -13,6 +13,12 @@ export const MOCK_EVENT: Event = {
     googlePlaceId: "ChIJs-E1jKlZwokR5hN4X81BDuU",
     mainText: "Mission NYC",
     secondaryText: "West 28th Street, New York, NY, USA"
+  },
+  me: {
+    name: "Alex",
+    lastUpdatedMs: new Date().getTime(),
+    transportMode: TransportMode.Walk,
+    etaMs: null
   }
 };
 

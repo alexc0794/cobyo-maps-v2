@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
+import { usePosition } from "use-position";
 
-import { Event } from "../../../interfaces";
+import { getDistance } from "../../../helpers";
+import useGoogleMaps from "../../../hooks/useGoogleMaps";
+import { Event, TransportMode } from "../../../interfaces";
 import "./index.css";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -73,9 +76,50 @@ type EventPageScheduleItemProps = {
 };
 
 function EventPageSchedule({ event }: EventPageScheduleProps) {
+  const [projectedArrivalMs, setProjectedArrivalMs] = useState<number | null>(
+    null
+  );
+
+  async function calculateDistance(
+    transportMode: TransportMode,
+    latitude: number,
+    longitude: number,
+    googlePlaceId: string
+  ) {
+    const durationInMs = await getDistance(
+      transportMode,
+      latitude,
+      longitude,
+      googlePlaceId
+    );
+    setProjectedArrivalMs(durationInMs + new Date().getTime());
+  }
+
+  const { latitude, longitude } = usePosition(true); // TODO: Should we watch the users position? How do we configure frequency?
+  const isGoogleLoaded = useGoogleMaps();
+  const transportMode: TransportMode | null = event.me
+    ? event.me.transportMode
+    : null;
+  const googlePlaceId = event.place.googlePlaceId;
+
+  useEffect(() => {
+    if (
+      isGoogleLoaded &&
+      transportMode !== null &&
+      latitude &&
+      longitude &&
+      googlePlaceId
+    ) {
+      calculateDistance(transportMode, latitude, longitude, googlePlaceId);
+    }
+  }, [isGoogleLoaded, latitude, longitude, transportMode, googlePlaceId]);
+
   return (
     <div className="EventPageSchedule">
-      <EventPageScheduleItem title="Projected Arrival" timeMs={null} />
+      <EventPageScheduleItem
+        title="Projected Arrival"
+        timeMs={projectedArrivalMs}
+      />
       <EventPageScheduleItem title="Scheduled" timeMs={event.scheduledForMs} />
     </div>
   );

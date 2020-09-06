@@ -8,6 +8,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { usePosition } from "use-position";
 
 import useGoogleMaps from "../hooks/useGoogleMaps";
+import { getDistance } from "../helpers";
 import { TransportMode } from "../interfaces";
 import lyftLogo from "../images/lyft-logo.png";
 import "./index.css";
@@ -96,41 +97,6 @@ TransportModeSelector.defaultProps = {
   initiallySelectedTransportMode: null,
   googlePlaceId: null
 };
-
-function getDistance(
-  transportMode: TransportMode,
-  lat: number,
-  lng: number,
-  placeId: string
-): Promise<number> {
-  const TRANSPORT_MODE_TO_TRAVEL_MODE = {
-    [TransportMode.Walk]: window.google.maps.TravelMode.WALKING,
-    [TransportMode.Car]: window.google.maps.TravelMode.DRIVING,
-    [TransportMode.Transit]: window.google.maps.TravelMode.TRANSIT,
-    [TransportMode.Lyft]: window.google.maps.TravelMode.DRIVING
-  };
-
-  return new Promise((resolve, reject) => {
-    const service = new window.google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: [new window.google.maps.LatLng(lat, lng)],
-        destinations: [{ placeId }],
-        travelMode: TRANSPORT_MODE_TO_TRAVEL_MODE[transportMode]
-      },
-      (response, status) => {
-        if (status !== "OK") {
-          return reject();
-        }
-        const element = response.rows[0].elements[0];
-        if (element.status !== "OK") {
-          return reject();
-        }
-        return resolve(element.duration.value * 1000);
-      }
-    );
-  });
-}
 
 function TransportModeDetails({
   transportMode,

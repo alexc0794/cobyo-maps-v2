@@ -33,6 +33,7 @@ export interface Event {
   scheduledForMs: number | null;
   endedAtMs: number | null;
   place: Place; // TODO: Do we want this to be nullable?
+  me?: EventUser; // This field is derived on the backend by searching eventUsers for the requester
 }
 
 // LocallyStoredEvent [private] - the event metadata to be stored in browser's local storage

@@ -38,7 +38,6 @@ function EventPageNav() {
           <Nav.Link
             eventKey={tab}
             onSelect={(eventKey: string | null) => handleSelect(eventKey)}
-            disabled={tab === CAMERA_TAB}
           >
             {`${tab.charAt(0).toUpperCase()}${tab.slice(1)}`}
           </Nav.Link>

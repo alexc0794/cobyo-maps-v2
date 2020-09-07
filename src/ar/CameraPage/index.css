@@ -1,0 +1,8 @@
+.CameraPage {
+}
+
+.CameraPage-button {
+  position: fixed;
+  bottom: 50px;
+  z-index: 100000;
+}

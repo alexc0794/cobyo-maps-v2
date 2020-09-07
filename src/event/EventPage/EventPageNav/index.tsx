@@ -15,7 +15,8 @@ function EventPageNav() {
 
   function handleSelect(eventKey: string | null) {
     const tab = eventKey || DEFAULT_TAB;
-    history.push(`${match.url}/${tab}`);
+    const url = `${match.url}/${tab}`;
+    history.push(url);
   }
 
   const defaultActiveKey = (() => {
@@ -37,6 +38,7 @@ function EventPageNav() {
           <Nav.Link
             eventKey={tab}
             onSelect={(eventKey: string | null) => handleSelect(eventKey)}
+            disabled={tab === CAMERA_TAB}
           >
             {`${tab.charAt(0).toUpperCase()}${tab.slice(1)}`}
           </Nav.Link>

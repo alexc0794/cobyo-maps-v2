@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Switch,
   Redirect,
@@ -13,8 +13,8 @@ import EventPageNav from "./EventPageNav";
 import EventPageSchedule from "./EventPageSchedule";
 import EventPageUsers from "./EventPageUsers";
 import EventPageMap from "./EventPageMap";
+import useEvent from "../../hooks/useEvent";
 import { Event } from "../../interfaces";
-import { MOCK_EVENT } from "../../mocks";
 import "./index.css";
 
 interface EventPageRouteParams {
@@ -23,22 +23,20 @@ interface EventPageRouteParams {
 
 function EventPage() {
   let { eventId } = useParams<EventPageRouteParams>();
-  const [event, setEvent] = useState<Event | null>(null);
-
-  async function loadEvent(eventId: string) {
-    const event: Event | null = await Promise.resolve(MOCK_EVENT); // TODO: Replace with an actual server call
-    setEvent(event);
-  }
-
-  useEffect(() => {
-    loadEvent(eventId);
-  }, [eventId]);
+  const {
+    event,
+    error,
+    loading
+  }: { event: Event | null; error: boolean; loading: boolean } = useEvent(
+    eventId
+  );
 
   let match = useRouteMatch();
 
   return (
     <div className="EventPage">
-      {!event && <p>Loading</p>}
+      {!event && loading && <p>Loading</p>}
+      {!event && error && <p>An error occurred</p>}
       {event && (
         <>
           <EventPageTimer event={event} />

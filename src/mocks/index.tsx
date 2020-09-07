@@ -8,7 +8,12 @@ export const MOCK_EVENT: Event = {
       name: "Donald Trump",
       lastUpdatedMs: new Date().getTime() - 30 * 60 * 1000, // Updated 30 minutes ago
       transportMode: TransportMode.Lyft,
-      etaMs: new Date().getTime() + 60 * 60 * 1000 // 1 hour away
+      etaMs: new Date().getTime() + 60 * 60 * 1000, // 1 hour away
+      position: {
+        // Port Authority
+        latitude: 40.7587159,
+        longitude: -73.991603
+      }
     },
     {
       name: "Joe Biden",
@@ -23,6 +28,7 @@ export const MOCK_EVENT: Event = {
       etaMs: new Date().getTime() + 15 * 60 * 1000, // 15 minutes away
       phoneNumber: "7034720567",
       position: {
+        // 561 10th Ave
         latitude: 40.759116,
         longitude: -73.9964225
       },
@@ -33,7 +39,12 @@ export const MOCK_EVENT: Event = {
       name: "Elon Musk",
       lastUpdatedMs: new Date().getTime() - 15 * 60 * 1000, // Updated 1 minutes ago
       transportMode: TransportMode.Car,
-      etaMs: new Date().getTime() - 5 * 60 * 1000 // should have arrived 5 minutes ago
+      etaMs: new Date().getTime() - 5 * 60 * 1000, // should have arrived 5 minutes ago
+      position: {
+        // Silver Towers
+        latitude: 40.7614426,
+        longitude: -74.0022841
+      }
     }
   ],
   createdAtMs: new Date().getTime() - 10 * 60 * 1000,
@@ -41,8 +52,9 @@ export const MOCK_EVENT: Event = {
   endedAtMs: null,
   place: {
     position: {
-      latitude: 40.7480046,
-      longitude: -73.9969309
+      // 40.7559738,-74.0006607
+      latitude: 40.7559738,
+      longitude: -74.0006607
     },
     googlePlaceId: "ChIJs-E1jKlZwokR5hN4X81BDuU",
     mainText: "Mission NYC",

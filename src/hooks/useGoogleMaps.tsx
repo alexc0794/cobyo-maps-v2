@@ -14,7 +14,7 @@ let globalLoaded = false;
 // first attempt, but also on all of the silenced attempts that we cached.
 let cachedCallbacks: Array<(b: boolean) => void> = [];
 
-export default function useGoogleMaps() {
+export default function useGoogleMaps(): boolean {
   const [loaded, setLoaded] = useState<boolean>(globalLoaded);
 
   async function loadGoogleMaps() {

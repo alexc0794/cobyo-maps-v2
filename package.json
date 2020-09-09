@@ -18,6 +18,7 @@
     "@types/react-places-autocomplete": "^7.2.6",
     "@types/react-router-dom": "^5.1.5",
     "@types/use-position": "0.0.0",
+    "awesome-debounce-promise": "^2.1.0",
     "bootstrap": "^4.5.2",
     "load-google-maps-api": "^2.0.2",
     "react": "^16.13.1",

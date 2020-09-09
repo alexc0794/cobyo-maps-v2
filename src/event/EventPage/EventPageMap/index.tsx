@@ -1,6 +1,6 @@
 import React from "react";
-import { usePosition } from "use-position";
 
+import usePosition from "../../../hooks/usePosition";
 import GoogleMap from "../../../GoogleMap";
 import { Position, Event, EventUser, Place } from "../../../interfaces";
 
@@ -50,13 +50,12 @@ type EventPageMapProps = {
 };
 
 function EventPageMap({ event }: EventPageMapProps) {
-  const { latitude: userLatitude, longitude: userLongitude } = usePosition(
-    false
-  );
-  if (userLatitude === undefined || userLongitude === undefined) {
+  const { position } = usePosition(event.me, event.eventId);
+  if (!position) {
     return null;
   }
 
+  const { latitude: userLatitude, longitude: userLongitude } = position;
   const {
     latitude: centerLatitude,
     longitude: centerLongitude

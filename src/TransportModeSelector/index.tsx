@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
-import PropTypes, { InferProps } from "prop-types";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { usePosition } from "use-position";
 
+import usePosition from "../hooks/usePosition";
 import useGoogleMaps from "../hooks/useGoogleMaps";
 import { getDistance } from "../helpers";
-import { TransportMode } from "../interfaces";
+import { TransportMode, Position } from "../interfaces";
 import { TRANSPORT_MODE_TO_ICON } from "../constants";
 import "./index.css";
+
+type TransportModeSelectorProps = {
+  initiallySelectedTransportMode?: TransportMode;
+  googlePlaceId?: string;
+  onSelect: (transportMode: TransportMode) => void;
+};
 
 function TransportModeSelector({
   initiallySelectedTransportMode,
   googlePlaceId,
   onSelect
-}: InferProps<typeof TransportModeSelector.propTypes>) {
+}: TransportModeSelectorProps) {
   const modes = Object.keys(TransportMode).filter((key: any) =>
     isNaN(Number(key))
   ); // TODO: Get modes from backend
@@ -29,8 +34,6 @@ function TransportModeSelector({
     setSelectedTransportMode(transportMode);
     onSelect(transportMode);
   }
-
-  const { latitude, longitude } = usePosition(false);
 
   return (
     <ButtonGroup className="TransportModeSelector" vertical>
@@ -59,8 +62,6 @@ function TransportModeSelector({
               <div className="TransportModeSelector-mode-details">
                 <TransportModeDetails
                   transportMode={transportMode}
-                  latitude={latitude}
-                  longitude={longitude}
                   googlePlaceId={googlePlaceId}
                 />
               </div>
@@ -72,39 +73,26 @@ function TransportModeSelector({
   );
 }
 
-TransportModeSelector.propTypes = {
-  initiallySelectedTransportMode: PropTypes.oneOf<TransportMode>(
-    Object.keys(TransportMode).map(
-      key => TransportMode[key as keyof typeof TransportMode]
-    )
-  ),
-  googlePlaceId: PropTypes.string,
-  onSelect: PropTypes.func.isRequired
-};
-
-TransportModeSelector.defaultProps = {
-  initiallySelectedTransportMode: null,
-  googlePlaceId: null
+type TransportModeDetailsProps = {
+  transportMode: TransportMode;
+  googlePlaceId?: string;
 };
 
 function TransportModeDetails({
   transportMode,
-  latitude,
-  longitude,
   googlePlaceId
-}: InferProps<typeof TransportModeDetails.propTypes>) {
+}: TransportModeDetailsProps) {
   const [durationInMs, setDurationInMs] = useState<number | null>(null);
+  const { position } = usePosition(null, null);
 
   async function calculateDistance(
     transportMode: TransportMode,
-    latitude: number,
-    longitude: number,
+    position: Position,
     googlePlaceId: string
   ) {
     const durationInMs = await getDistance(
       transportMode,
-      latitude,
-      longitude,
+      position,
       googlePlaceId
     );
     setDurationInMs(durationInMs);
@@ -112,10 +100,10 @@ function TransportModeDetails({
 
   const isGoogleLoaded = useGoogleMaps();
   useEffect(() => {
-    if (isGoogleLoaded && latitude && longitude && googlePlaceId) {
-      calculateDistance(transportMode, latitude, longitude, googlePlaceId);
+    if (isGoogleLoaded && position && googlePlaceId) {
+      calculateDistance(transportMode, position, googlePlaceId);
     }
-  }, [transportMode, latitude, longitude, googlePlaceId, isGoogleLoaded]);
+  }, [transportMode, position, googlePlaceId, isGoogleLoaded]);
 
   return (
     <div>
@@ -127,22 +115,5 @@ function TransportModeDetails({
     </div>
   );
 }
-
-TransportModeDetails.propTypes = {
-  transportMode: PropTypes.oneOf<TransportMode>(
-    Object.keys(TransportMode).map(
-      key => TransportMode[key as keyof typeof TransportMode]
-    )
-  ).isRequired,
-  latitude: PropTypes.number,
-  longitude: PropTypes.number,
-  googlePlaceId: PropTypes.string
-};
-
-TransportModeDetails.defaultProps = {
-  latitude: null,
-  longitude: null,
-  googlePlaceId: null
-};
 
 export default TransportModeSelector;

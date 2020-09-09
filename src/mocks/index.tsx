@@ -1,14 +1,42 @@
-import { Event, ActiveEvent, RecentEvent, TransportMode } from "../interfaces";
+import {
+  Event,
+  EventUser,
+  ActiveEvent,
+  RecentEvent,
+  TransportMode
+} from "../interfaces";
+
+const MOCK_ME: EventUser = {
+  name: "Alegs Chow",
+  lastUpdatedMs: new Date().getTime() - 5 * 60 * 1000, // Updated 5 minutes ago
+  transportMode: TransportMode.Walk,
+  etaMs: new Date().getTime() + 15 * 60 * 1000, // 15 minutes away
+  phoneNumber: "7034720567",
+  position: {
+    // 561 10th Ave
+    latitude: 40.759116,
+    longitude: -73.9964225
+  },
+  settings: {
+    isLocationSharingEnabled: true
+  },
+  profilePicUrl:
+    "https://scontent-lga3-2.xx.fbcdn.net/v/t1.0-1/cp0/p60x60/27066944_10215766331491504_3714665914039678592_n.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=_CdxB0PqhEgAX-8pQEV&_nc_ht=scontent-lga3-2.xx&oh=0afd524b2647d229fc8b66b28c5d9e69&oe=5F7A7B33"
+};
 
 export const MOCK_EVENT: Event = {
   eventId: "1",
   name: "Mission NYC",
   eventUsers: [
+    MOCK_ME,
     {
       name: "Donald Trump",
       lastUpdatedMs: new Date().getTime() - 30 * 60 * 1000, // Updated 30 minutes ago
       transportMode: TransportMode.Lyft,
       etaMs: new Date().getTime() + 60 * 60 * 1000, // 1 hour away
+      settings: {
+        isLocationSharingEnabled: true
+      },
       position: {
         // Port Authority
         latitude: 40.7587159,
@@ -19,27 +47,19 @@ export const MOCK_EVENT: Event = {
       name: "Joe Biden",
       lastUpdatedMs: new Date().getTime() - 15 * 60 * 1000, // Updated 15 minutes ago
       transportMode: TransportMode.Car,
-      etaMs: null
-    },
-    {
-      name: "Alegs Chow",
-      lastUpdatedMs: new Date().getTime() - 5 * 60 * 1000, // Updated 5 minutes ago
-      transportMode: TransportMode.Walk,
-      etaMs: new Date().getTime() + 15 * 60 * 1000, // 15 minutes away
-      phoneNumber: "7034720567",
-      position: {
-        // 561 10th Ave
-        latitude: 40.759116,
-        longitude: -73.9964225
-      },
-      profilePicUrl:
-        "https://scontent-lga3-2.xx.fbcdn.net/v/t1.0-1/cp0/p60x60/27066944_10215766331491504_3714665914039678592_n.jpg?_nc_cat=101&_nc_sid=7206a8&_nc_ohc=_CdxB0PqhEgAX-8pQEV&_nc_ht=scontent-lga3-2.xx&oh=0afd524b2647d229fc8b66b28c5d9e69&oe=5F7A7B33"
+      etaMs: null,
+      settings: {
+        isLocationSharingEnabled: false
+      }
     },
     {
       name: "Elon Musk",
       lastUpdatedMs: new Date().getTime() - 15 * 60 * 1000, // Updated 1 minutes ago
       transportMode: TransportMode.Car,
       etaMs: new Date().getTime() - 5 * 60 * 1000, // should have arrived 5 minutes ago
+      settings: {
+        isLocationSharingEnabled: true
+      },
       position: {
         // Silver Towers
         latitude: 40.7614426,
@@ -60,12 +80,7 @@ export const MOCK_EVENT: Event = {
     mainText: "Mission NYC",
     secondaryText: "West 28th Street, New York, NY, USA"
   },
-  me: {
-    name: "Alex",
-    lastUpdatedMs: new Date().getTime(),
-    transportMode: TransportMode.Walk,
-    etaMs: null
-  }
+  me: MOCK_ME
 };
 
 export const MOCK_ACTIVE_EVENT: ActiveEvent = {

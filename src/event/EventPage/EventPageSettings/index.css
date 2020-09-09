@@ -1,0 +1,13 @@
+.EventPageSettings {
+  padding: 10px;
+}
+
+.EventPageSettings > .form-group {
+  margin-bottom: 20px;
+}
+
+.EventPageSettings-submit {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+}

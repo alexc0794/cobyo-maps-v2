@@ -9,39 +9,31 @@ import RecentEvents from "../RecentEvents";
 import { TransportMode, RecentEvent, Place } from "../interfaces";
 import "./index.css";
 
-interface SearchResult {
+export interface SearchResult {
   name: string;
   place: Place;
 }
 
+function determineIfValidSearchResult(obj: object): obj is SearchResult {
+  if ((obj as SearchResult).name && (obj as SearchResult).place) {
+    return true;
+  }
+  return false;
+}
+
 function getQuerySearchResult(location: Location): SearchResult | null {
   const query = new URLSearchParams(location.search);
-  const name = query.get("name");
-  const latitude = query.get("latitude");
-  const longitude = query.get("longitude");
-  const googlePlaceId = query.get("googlePlaceId");
+  const searchResultParam: string | null = query.get("search") || null;
+  const searchResultObj: object | null = searchResultParam
+    ? JSON.parse(searchResultParam)
+    : null;
+  const searchResult: SearchResult | null = searchResultObj
+    ? determineIfValidSearchResult(searchResultObj)
+      ? searchResultObj
+      : null
+    : null;
 
-  if (
-    name === null ||
-    latitude === null ||
-    isNaN(parseFloat(latitude)) ||
-    longitude === null ||
-    isNaN(parseFloat(longitude)) ||
-    googlePlaceId === null
-  ) {
-    return null;
-  }
-
-  return {
-    name,
-    place: {
-      position: {
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude)
-      },
-      googlePlaceId: googlePlaceId as string
-    }
-  };
+  return searchResult;
 }
 
 function CreateEventPage() {

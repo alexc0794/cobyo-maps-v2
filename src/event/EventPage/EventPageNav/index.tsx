@@ -6,7 +6,9 @@ import "./index.css";
 
 const ABOUT_TAB = "about";
 export const CAMERA_TAB = "camera";
-const TABS = [ABOUT_TAB, "map", CAMERA_TAB];
+const MAP_TAB = "map";
+const SETTINGS_TAB = "settings";
+const TABS = [ABOUT_TAB, MAP_TAB, CAMERA_TAB, SETTINGS_TAB];
 const DEFAULT_TAB = ABOUT_TAB;
 
 function EventPageNav() {

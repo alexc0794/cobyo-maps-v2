@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import { usePosition } from "use-position";
 
 import { getDistance } from "../../../helpers";
 import useGoogleMaps from "../../../hooks/useGoogleMaps";
-import { Event, TransportMode } from "../../../interfaces";
+import usePosition from "../../../hooks/usePosition";
+import { Event, TransportMode, Position } from "../../../interfaces";
 import "./index.css";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -82,20 +82,18 @@ function EventPageSchedule({ event }: EventPageScheduleProps) {
 
   async function calculateDistance(
     transportMode: TransportMode,
-    latitude: number,
-    longitude: number,
+    position: Position,
     googlePlaceId: string
   ) {
     const durationInMs = await getDistance(
       transportMode,
-      latitude,
-      longitude,
+      position,
       googlePlaceId
     );
     setProjectedArrivalMs(durationInMs + new Date().getTime());
   }
 
-  const { latitude, longitude } = usePosition(true); // TODO: Should we watch the users position? How do we configure frequency?
+  const { position } = usePosition(event.me, event.eventId);
   const isGoogleLoaded = useGoogleMaps();
   const transportMode: TransportMode | null = event.me
     ? event.me.transportMode
@@ -103,16 +101,10 @@ function EventPageSchedule({ event }: EventPageScheduleProps) {
   const googlePlaceId = event.place.googlePlaceId;
 
   useEffect(() => {
-    if (
-      isGoogleLoaded &&
-      transportMode !== null &&
-      latitude &&
-      longitude &&
-      googlePlaceId
-    ) {
-      calculateDistance(transportMode, latitude, longitude, googlePlaceId);
+    if (isGoogleLoaded && transportMode !== null && position && googlePlaceId) {
+      calculateDistance(transportMode, position, googlePlaceId);
     }
-  }, [isGoogleLoaded, latitude, longitude, transportMode, googlePlaceId]);
+  }, [isGoogleLoaded, position, transportMode, googlePlaceId]);
 
   return (
     <div className="EventPageSchedule">

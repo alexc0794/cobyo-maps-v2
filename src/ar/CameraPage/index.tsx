@@ -39,21 +39,6 @@ function Scene({ eventId }: SceneProps) {
       camera.setAttribute("rotation-reader", "");
       scene.appendChild(camera);
 
-      const latitude = 40.7587159;
-      const longitude = -73.991603;
-      const link = document.createElement("a-link");
-      link.setAttribute("scale", "50 50 50");
-      link.setAttribute("visualAspectEnabled", "false");
-      link.setAttribute("border", "red");
-      link.setAttribute("highlighted", "true");
-      link.setAttribute("backgroundColor", "red");
-      link.setAttribute("title", "TESTING");
-      link.setAttribute(
-        "gps-entity-place",
-        `latitude:${latitude};longitude:${longitude};`
-      );
-      scene.appendChild(link);
-
       root.parentNode.insertBefore(scene, root.nextSibling);
     }
 
@@ -102,7 +87,7 @@ function SceneMarker({ sceneElementId, position, title }: SceneMarkerProps) {
         return;
       }
       const link = document.createElement("a-link");
-      link.setAttribute("scale", "50 50 50");
+      link.setAttribute("scale", "25 25 25");
       link.setAttribute("visualAspectEnabled", "false");
       link.setAttribute("border", "red");
       link.setAttribute("highlighted", "true");

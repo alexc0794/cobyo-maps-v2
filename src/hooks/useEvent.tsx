@@ -3,23 +3,35 @@ import { useEffect, useState } from "react";
 import { Event } from "../interfaces";
 import { MOCK_EVENT } from "../mocks";
 
-export default function useEvent(eventId: string) {
-  const [event, setEvent] = useState<Event | null>(null);
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+type UseEventType = {
+  event: Event | null;
+  error: boolean;
+  loading: boolean;
+};
+
+export default function useEvent(eventId: string): UseEventType {
+  const [{ event, error, loading }, setState] = useState<UseEventType>({
+    event: null,
+    error: false,
+    loading: true
+  });
 
   useEffect(() => {
-    setLoading(true);
-
     async function loadEvent(eventId: string) {
       try {
         const event: Event | null = await Promise.resolve(MOCK_EVENT);
-        setEvent(event);
-        setLoading(false);
-        setError(false);
+        setState({
+          event,
+          loading: false,
+          error: false
+        });
       } catch (err) {
         console.log(err);
-        setError(true);
+        setState({
+          event: null,
+          loading: false,
+          error: true
+        });
       }
     }
     loadEvent(eventId);

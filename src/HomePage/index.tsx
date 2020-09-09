@@ -4,6 +4,7 @@ import SearchBar from "../SearchBar";
 import ActiveEvents from "../ActiveEvents";
 import RecentEvents from "../RecentEvents";
 import { ActiveEvent, RecentEvent } from "../interfaces";
+import { SearchResult } from "../CreateEventPage";
 
 function HomePage() {
   const history = useHistory();
@@ -17,17 +18,14 @@ function HomePage() {
   }
 
   function handleRecentEventSelect(recentEvent: RecentEvent) {
-    const placeQueryString = Object.keys(recentEvent.place)
-      .map(
-        (key: string) =>
-          `${encodeURIComponent(key)}=${encodeURIComponent(
-            (recentEvent.place as any)[key]
-          )}`
-      )
-      .join("&");
-    const queryString = `name=${encodeURIComponent(
-      recentEvent.name
-    )}&${placeQueryString}`;
+    const searchResult: SearchResult = {
+      name: recentEvent.name,
+      place: recentEvent.place
+    };
+
+    const queryString = `search=${encodeURIComponent(
+      JSON.stringify(searchResult)
+    )}`;
     history.push(`/create?${queryString}`);
   }
 

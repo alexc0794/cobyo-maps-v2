@@ -13,6 +13,7 @@ import EventPageNav from "./EventPageNav";
 import EventPageSchedule from "./EventPageSchedule";
 import EventPageUsers from "./EventPageUsers";
 import EventPageMap from "./EventPageMap";
+import EventPageSettings from "./EventPageSettings";
 import useEvent from "../../hooks/useEvent";
 import { Event } from "../../interfaces";
 import "./index.css";
@@ -43,13 +44,17 @@ function EventPage() {
           <EventPageHeader event={event} />
           <EventPageNav />
           <Switch>
-            <Route exact path={`${match.path}/map`}>
+            <Route path={`${match.path}/map`}>
               <EventPageMap event={event} />
             </Route>
-            <Route exact path={`${match.path}/about`}>
+            <Route path={`${match.path}/about`}>
               <EventPageSchedule event={event} />
               <EventPageUsers event={event} />
             </Route>
+            <Route path={`${match.path}/settings`}>
+              <EventPageSettings event={event} />
+            </Route>
+            // If no paths match, default to /about
             <Route>
               <Redirect to={`${match.url}/about`} />
             </Route>

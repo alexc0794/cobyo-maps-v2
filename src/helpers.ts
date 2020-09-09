@@ -1,9 +1,8 @@
-import { TransportMode } from "./interfaces";
+import { TransportMode, Position } from "./interfaces";
 
 export function getDistance(
   transportMode: TransportMode,
-  lat: number,
-  lng: number,
+  position: Position,
   placeId: string
 ): Promise<number> {
   // WARNING: This map is put inside a function because it depends on Google to be loaded
@@ -13,12 +12,13 @@ export function getDistance(
     [TransportMode.Transit]: window.google.maps.TravelMode.TRANSIT,
     [TransportMode.Lyft]: window.google.maps.TravelMode.DRIVING
   };
+  const { latitude, longitude } = position;
 
   return new Promise((resolve, reject) => {
     const service = new window.google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
       {
-        origins: [new window.google.maps.LatLng(lat, lng)],
+        origins: [new window.google.maps.LatLng(latitude, longitude)],
         destinations: [{ placeId }],
         travelMode: TRANSPORT_MODE_TO_TRAVEL_MODE[transportMode]
       },

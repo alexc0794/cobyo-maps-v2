@@ -20,11 +20,16 @@ export interface Place {
   secondaryText?: string;
 }
 
+export interface EventUserSettings {
+  isLocationSharingEnabled: boolean;
+}
+
 export interface EventUser {
   name: string;
   lastUpdatedMs: number;
   transportMode: TransportMode | null;
   etaMs: number | null;
+  settings: EventUserSettings;
   isOnTheWay?: boolean;
   phoneNumber?: string;
   position?: Position; // Not everyone may allow for position to be shared
@@ -40,7 +45,7 @@ export interface Event {
   scheduledForMs: number | null;
   endedAtMs: number | null;
   place: Place; // TODO: Do we want this to be nullable?
-  me?: EventUser; // This field is derived on the backend by searching eventUsers for the requester
+  me: EventUser | null; // This field is derived on the backend by searching eventUsers for the requester
 }
 
 // LocallyStoredEvent [private] - the event metadata to be stored in browser's local storage

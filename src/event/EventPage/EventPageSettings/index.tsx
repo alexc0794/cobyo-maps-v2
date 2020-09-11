@@ -13,11 +13,10 @@ type EventPageSettingsProps = {
 };
 
 function EventPageSettings({ event }: EventPageSettingsProps) {
-  const {
-    isLocationSharingEnabled,
-    setWatch,
-    setIsLocationSharingEnabled
-  } = usePosition(event.me, event.eventId);
+  const { isLocationSharingEnabled, setIsLocationSharingEnabled } = usePosition(
+    event.me,
+    event.eventId
+  );
 
   const [
     localIsLocationSharingEnabled,
@@ -42,7 +41,6 @@ function EventPageSettings({ event }: EventPageSettingsProps) {
   }
 
   function handleSubmit() {
-    setWatch(localIsLocationSharingEnabled);
     setIsLocationSharingEnabled(localIsLocationSharingEnabled);
   }
 

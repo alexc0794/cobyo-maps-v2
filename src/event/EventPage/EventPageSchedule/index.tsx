@@ -85,15 +85,21 @@ function EventPageSchedule({ event }: EventPageScheduleProps) {
     position: Position,
     googlePlaceId: string
   ) {
-    const durationInMs = await getDistance(
-      transportMode,
-      position,
-      googlePlaceId
-    );
-    setProjectedArrivalMs(durationInMs + new Date().getTime());
+    try {
+      const durationInMs = await getDistance(
+        transportMode,
+        position,
+        googlePlaceId
+      );
+      setProjectedArrivalMs(durationInMs + new Date().getTime());
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   const { position } = usePosition(event.me, event.eventId);
+  const latitude = position ? position.latitude : null;
+  const longitude = position ? position.longitude : null;
   const isGoogleLoaded = useGoogleMaps();
   const transportMode: TransportMode | null = event.me
     ? event.me.transportMode
@@ -101,10 +107,16 @@ function EventPageSchedule({ event }: EventPageScheduleProps) {
   const googlePlaceId = event.place.googlePlaceId;
 
   useEffect(() => {
-    if (isGoogleLoaded && transportMode !== null && position && googlePlaceId) {
-      calculateDistance(transportMode, position, googlePlaceId);
+    if (
+      isGoogleLoaded &&
+      transportMode !== null &&
+      latitude &&
+      longitude &&
+      googlePlaceId
+    ) {
+      calculateDistance(transportMode, { latitude, longitude }, googlePlaceId);
     }
-  }, [isGoogleLoaded, position, transportMode, googlePlaceId]);
+  }, [isGoogleLoaded, latitude, longitude, transportMode, googlePlaceId]);
 
   return (
     <div className="EventPageSchedule">

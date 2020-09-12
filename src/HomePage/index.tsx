@@ -1,13 +1,19 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+
+import useUser from "../hooks/useUser";
+import LoginForm from "../LoginForm";
 import SearchBar from "../SearchBar";
 import ActiveEvents from "../ActiveEvents";
 import RecentEvents from "../RecentEvents";
 import { ActiveEvent, RecentEvent } from "../interfaces";
 import { SearchResult } from "../CreateEventPage";
+import "./index.css";
 
 function HomePage() {
   const history = useHistory();
+  const { userId, name, phoneNumber, loginUser } = useUser();
+  const isLoggedIn = !!(userId && name && phoneNumber);
 
   function handleSearchBarClick() {
     history.push("/create");
@@ -27,6 +33,22 @@ function HomePage() {
       JSON.stringify(searchResult)
     )}`;
     history.push(`/create?${queryString}`);
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <>
+        <div className="HomePage-logo"></div>
+        <div className="HomePage-login">
+          <LoginForm
+            initialUserId={userId}
+            initialName={name}
+            initialPhoneNumber={phoneNumber}
+            onLogin={loginUser}
+          />
+        </div>
+      </>
+    );
   }
 
   return (

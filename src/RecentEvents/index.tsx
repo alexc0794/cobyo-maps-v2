@@ -8,7 +8,7 @@ import { MOCK_RECENT_EVENTS } from "../mocks";
 import "./index.css";
 
 function RecentEvents({ onSelect }: InferProps<typeof RecentEvents.propTypes>) {
-  const [recentEvents] = useLocalStorage<Array<RecentEvent>>(
+  const { value: recentEvents } = useLocalStorage<Array<RecentEvent>>(
     "recentEvents",
     MOCK_RECENT_EVENTS // TODO: Replace with []
   );

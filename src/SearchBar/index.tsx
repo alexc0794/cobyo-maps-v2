@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes, { InferProps } from "prop-types";
 import PlacesAutocomplete, {
   geocodeByPlaceId,
   getLatLng,
@@ -46,13 +45,21 @@ const GOOGLE_PLACE_TYPE_TO_ICON: { [Key: string]: IconDefinition | null } = {
   university: faUniversity
 };
 
+type SearchBarProps = {
+  initialSearchTerm?: string;
+  autoFocus?: boolean;
+  placeholder?: string;
+  onClick?: () => void;
+  onSelect?: (name: string, place: Place) => void;
+};
+
 function SearchBar({
-  initialSearchTerm,
-  autoFocus,
-  placeholder,
-  onClick,
-  onSelect
-}: InferProps<typeof SearchBar.propTypes>) {
+  initialSearchTerm = "",
+  autoFocus = false,
+  placeholder = "Where to today?",
+  onClick = () => {},
+  onSelect = () => {}
+}: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
   const isGoogleLoaded = useGoogleMaps();
 
@@ -69,7 +76,6 @@ function SearchBar({
     googlePlaceId: string,
     suggestion?: Suggestion
   ) {
-    console.log(address, googlePlaceId, suggestion);
     const results = await geocodeByPlaceId(googlePlaceId);
     const { lat, lng } = await getLatLng(results[0]);
     setSearchTerm(address);
@@ -157,21 +163,5 @@ function SearchBar({
     </div>
   );
 }
-
-SearchBar.propTypes = {
-  initialSearchTerm: PropTypes.string.isRequired,
-  autoFocus: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  onSelect: PropTypes.func.isRequired
-};
-
-SearchBar.defaultProps = {
-  initialSearchTerm: "",
-  autoFocus: false,
-  placeholder: "Where to today?",
-  onClick() {},
-  onSelect() {}
-};
 
 export default SearchBar;

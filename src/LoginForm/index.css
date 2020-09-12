@@ -1,0 +1,12 @@
+.LoginForm {
+  padding: 10px;
+}
+
+.LoginForm > .input-group {
+  margin: 20px 0;
+}
+
+.LoginForm-submit {
+  display: flex;
+  justify-content: center;
+}

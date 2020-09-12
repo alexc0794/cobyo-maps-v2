@@ -19,7 +19,7 @@ function buildDescription(nowMs: number, scheduledForMs: number): string {
 }
 
 function ActiveEvents({ onSelect }: InferProps<typeof ActiveEvents.propTypes>) {
-  const [activeEvent] = useLocalStorage<ActiveEvent | null>(
+  const { value: activeEvent } = useLocalStorage<ActiveEvent | null>(
     "activeEvent",
     MOCK_ACTIVE_EVENT // TODO: Replace with null
   );

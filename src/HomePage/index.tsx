@@ -1,8 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import useUser from "../hooks/useUser";
-import LoginForm from "../LoginForm";
+import LoginForm from "../user/LoginForm";
+import { login } from "../user/actions";
+import { selectToken } from "../user/selectors";
 import SearchBar from "../SearchBar";
 import ActiveEvents from "../ActiveEvents";
 import RecentEvents from "../RecentEvents";
@@ -11,9 +13,10 @@ import { SearchResult } from "../CreateEventPage";
 import "./index.css";
 
 function HomePage() {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const { userId, name, phoneNumber, loginUser } = useUser();
-  const isLoggedIn = !!(userId && name && phoneNumber);
+  const token = useSelector(selectToken);
+  const isLoggedIn = !!token;
 
   function handleSearchBarClick() {
     history.push("/create");
@@ -26,7 +29,7 @@ function HomePage() {
   function handleRecentEventSelect(recentEvent: RecentEvent) {
     const searchResult: SearchResult = {
       name: recentEvent.name,
-      place: recentEvent.place
+      place: recentEvent.place,
     };
 
     const queryString = `search=${encodeURIComponent(
@@ -41,10 +44,9 @@ function HomePage() {
         <div className="HomePage-logo"></div>
         <div className="HomePage-login">
           <LoginForm
-            initialUserId={userId}
-            initialName={name}
-            initialPhoneNumber={phoneNumber}
-            onLogin={loginUser}
+            initialName=""
+            initialPhoneNumber=""
+            onLogin={(args) => dispatch(login(args))}
           />
         </div>
       </>

@@ -1,18 +1,11 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import useEvent from "../../hooks/useEvent";
 import { Event, EventUser, Position } from "../../interfaces";
+import { fetchEvent } from "../../event/actions";
+import { selectEvent } from "../../event/selectors";
 import "./index.css";
-
-type EventPageRouteParams = {
-  eventId: string;
-};
-
-function CameraPage() {
-  let { eventId } = useParams<EventPageRouteParams>();
-  return <Scene eventId={eventId} />;
-}
 
 type SceneProps = {
   eventId: string;
@@ -45,7 +38,7 @@ function Scene({ eventId }: SceneProps) {
     initScene();
   }, []);
 
-  const { event }: { event: Event | null } = useEvent(eventId);
+  const event: Event | null = useSelector(selectEvent);
 
   if (!event) {
     return null;
@@ -106,6 +99,20 @@ function SceneMarker({ sceneElementId, position, title }: SceneMarkerProps) {
     initSceneMarker();
   }, [sceneElementId, position, title]);
   return <div />;
+}
+
+type EventPageRouteParams = {
+  eventId: string;
+};
+
+function CameraPage() {
+  const { eventId } = useParams<EventPageRouteParams>();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchEvent(eventId));
+  }, [dispatch, eventId]);
+
+  return <Scene eventId={eventId} />;
 }
 
 export default CameraPage;

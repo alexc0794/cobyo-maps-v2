@@ -1,3 +1,17 @@
+export interface User {
+  name: string;
+  phoneNumber: string;
+  firstName: string;
+  lastName: string | null;
+  sessionToken: SessionToken | null;
+}
+
+export interface SessionToken {
+  token: string;
+  tokenGeneratedAtMs: number;
+  tokenExpiresAtMs: number;
+}
+
 export interface Position {
   latitude: number;
   longitude: number;

@@ -119,7 +119,7 @@ function EventPageUserCard({ eventUser }: EventPageUserCardProps) {
     const message = `Where the fook are you?`; // TODO: Customize this message based on user's ETA
     window.location.href = `sms:${
       eventUser.phoneNumber
-    };?&body=${encodeURIComponent(
+    }  ;?&body=${encodeURIComponent(
       `${message}\n\nSent thru Cobyo\n${eventUrl}`
     )}`;
   }

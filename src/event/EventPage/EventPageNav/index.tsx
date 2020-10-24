@@ -8,7 +8,7 @@ const ABOUT_TAB = "about";
 export const CAMERA_TAB = "camera";
 const MAP_TAB = "map";
 const SETTINGS_TAB = "settings";
-const TABS = [ABOUT_TAB, MAP_TAB, CAMERA_TAB, SETTINGS_TAB];
+const TABS = [ABOUT_TAB, MAP_TAB, SETTINGS_TAB];
 const DEFAULT_TAB = ABOUT_TAB;
 
 function EventPageNav() {
@@ -23,7 +23,7 @@ function EventPageNav() {
 
   const defaultActiveKey = (() => {
     // A little hack to set the correct tab to active if the tab name is found in the URL
-    const tab = TABS.find(tab =>
+    const tab = TABS.find((tab) =>
       window.location.href.includes(tab.toLowerCase())
     );
     return tab || DEFAULT_TAB;
@@ -35,7 +35,7 @@ function EventPageNav() {
       className="EventPageNav"
       defaultActiveKey={defaultActiveKey}
     >
-      {TABS.map(tab => (
+      {TABS.map((tab) => (
         <Nav.Item key={tab}>
           <Nav.Link
             eventKey={tab}

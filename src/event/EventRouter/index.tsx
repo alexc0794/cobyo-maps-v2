@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { Switch, Redirect, Route, useRouteMatch } from "react-router-dom";
 
 import { CAMERA_TAB } from "../EventPage/EventPageNav";
 import CameraPage from "../../ar/CameraPage";
@@ -11,7 +11,7 @@ function EventRouter() {
   return (
     <Switch>
       <Route path={`${match.path}/:eventId/${CAMERA_TAB}`}>
-        <CameraPage />
+        <EventPage />
       </Route>
       <Route path={`${match.path}/:eventId`}>
         <EventPage />

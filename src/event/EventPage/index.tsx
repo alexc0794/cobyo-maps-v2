@@ -39,10 +39,6 @@ function EventPage() {
     dispatch(fetchEvent(eventId, token));
   }, [dispatch, eventId, token]);
 
-  // function handleLogin(phoneNumber: string, name: string) {
-  //   dispatch(login(phoneNumber, name));
-  // }
-
   let match = useRouteMatch();
 
   return (

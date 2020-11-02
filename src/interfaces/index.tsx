@@ -22,7 +22,7 @@ export enum TransportMode {
   Walk,
   Car,
   Transit,
-  Lyft
+  Lyft,
   // TODO: Lyft, Uber, other Transit APIs can unlock more modes
 }
 

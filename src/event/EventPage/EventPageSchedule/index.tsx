@@ -21,10 +21,14 @@ const MONTHS = [
   "Sep",
   "Oct",
   "Nov",
-  "Dec"
+  "Dec",
 ];
 
-function EventPageScheduleItem({ title, timeMs }: EventPageScheduleItemProps) {
+function EventPageScheduleItem({
+  title,
+  timeMs,
+  loading,
+}: EventPageScheduleItemProps) {
   function getFormattedDate(timeMs: number): string {
     const date = new Date(timeMs);
     const day = DAYS[date.getDay()];
@@ -51,21 +55,26 @@ function EventPageScheduleItem({ title, timeMs }: EventPageScheduleItemProps) {
   return (
     <div className="EventPageScheduleItem">
       <h3 className="EventPageScheduleItem-title">{title}</h3>
-
-      {timeMs ? (
-        <>
-          <p className="EventPageScheduleItem-date">
-            {getFormattedDate(timeMs)}
-          </p>
-          <p className="EventPageScheduleItem-time">
-            {getFormattedTime(timeMs)}
-          </p>
-        </>
-      ) : (
+      {!timeMs && loading && (
         <div className="EventPageScheduleItem-spinner">
           <Spinner animation="border" variant="secondary" />
         </div>
       )}
+      {!loading &&
+        (timeMs ? (
+          <>
+            <p className="EventPageScheduleItem-date">
+              {getFormattedDate(timeMs)}
+            </p>
+            <p className="EventPageScheduleItem-time">
+              {getFormattedTime(timeMs)}
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="EventPageScheduleItem-date">--</p>
+          </>
+        ))}
     </div>
   );
 }
@@ -73,6 +82,7 @@ function EventPageScheduleItem({ title, timeMs }: EventPageScheduleItemProps) {
 type EventPageScheduleItemProps = {
   title: string;
   timeMs: number | null;
+  loading: boolean;
 };
 
 function EventPageSchedule({ event }: EventPageScheduleProps) {
@@ -123,8 +133,13 @@ function EventPageSchedule({ event }: EventPageScheduleProps) {
       <EventPageScheduleItem
         title="Projected Arrival"
         timeMs={projectedArrivalMs}
+        loading={projectedArrivalMs === null && transportMode !== null}
       />
-      <EventPageScheduleItem title="Scheduled" timeMs={event.scheduledForMs} />
+      <EventPageScheduleItem
+        title="Scheduled"
+        timeMs={event.scheduledForMs}
+        loading={!event}
+      />
     </div>
   );
 }

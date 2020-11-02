@@ -27,12 +27,12 @@
 }
 
 .TransportModeSelector-mode-name {
-  width: 50%;
+  width: 45%;
   justify-content: flex-start;
   /* align-self: flex-start; */
 }
 
 .TransportModeSelector-mode-details {
-  min-width: 35%;
+  min-width: 40%;
   justify-content: flex-end;
 }

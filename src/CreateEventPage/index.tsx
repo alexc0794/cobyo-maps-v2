@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Location } from "history";
 import Button from "react-bootstrap/Button";
 
 import SearchBar from "../SearchBar";
 import TransportModeSelector from "../TransportModeSelector";
 import RecentEvents from "../RecentEvents";
+import { createEvent } from "../event/actions";
 import { TransportMode, RecentEvent, Place } from "../interfaces";
 import "./index.css";
 
@@ -38,6 +40,7 @@ function getQuerySearchResult(location: Location): SearchResult | null {
 
 function CreateEventPage() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const querySearchResult: SearchResult | null = getQuerySearchResult(
     useLocation()
   );
@@ -47,9 +50,6 @@ function CreateEventPage() {
   );
   const [searchResult, setSearchResult] = useState<SearchResult | null>(
     querySearchResult
-  );
-  const [transportMode, setTransportMode] = useState<TransportMode | null>(
-    null
   );
 
   function handleSearchBarSelect(name: string, place: Place) {
@@ -63,14 +63,19 @@ function CreateEventPage() {
     setSearchResult({ name, place });
   }
 
-  function handleTransportModeSelect(transportMode: TransportMode) {
-    setTransportMode(transportMode);
-  }
+  async function handleTransportModeSelect(transportMode: TransportMode) {
+    if (!searchResult) {
+      return;
+    }
 
-  async function handleContinueClick() {
-    console.log("Continuing with", transportMode, searchResult);
-    await Promise.resolve(); // TODO: Hook up with backend
-    history.push(`/events/${1}`);
+    try {
+      const eventId = await dispatch(
+        createEvent(searchResult.name, searchResult.place, transportMode)
+      );
+      history.push(`/events/${eventId}`);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function handleCancelClick() {
@@ -80,7 +85,7 @@ function CreateEventPage() {
   function handleRecentEventSelect(recentEvent: RecentEvent) {
     const searchResult: SearchResult = {
       name: recentEvent.name,
-      place: recentEvent.place
+      place: recentEvent.place,
     };
     // No need to assume inheritance of the transport mode
     setSearchResult(searchResult);
@@ -95,25 +100,13 @@ function CreateEventPage() {
         onSelect={handleSearchBarSelect}
       />
       {searchResult && (
-        <>
-          <TransportModeSelector
-            googlePlaceId={searchResult.place.googlePlaceId}
-            onSelect={handleTransportModeSelect}
-          />
-        </>
+        <TransportModeSelector
+          googlePlaceId={searchResult.place.googlePlaceId}
+          onSelect={handleTransportModeSelect}
+        />
       )}
       <div className="CreateEventPage-button-wrapper">
         <div className="CreateEventPage-button-group">
-          {searchResult &&
-            (transportMode !== null ? (
-              <Button size="lg" variant="primary" onClick={handleContinueClick}>
-                Continue
-              </Button>
-            ) : (
-              <Button size="lg" variant="warning" onClick={handleContinueClick}>
-                Continue without a mode
-              </Button>
-            ))}
           <Button size="lg" variant="link" onClick={handleCancelClick}>
             Cancel
           </Button>

@@ -19,7 +19,7 @@ type TransportModeSelectorProps = {
 function TransportModeSelector({
   initiallySelectedTransportMode,
   googlePlaceId,
-  onSelect
+  onSelect,
 }: TransportModeSelectorProps) {
   const modes = Object.keys(TransportMode).filter((key: any) =>
     isNaN(Number(key))
@@ -27,12 +27,14 @@ function TransportModeSelector({
 
   const [
     selectedTransportMode,
-    setSelectedTransportMode
+    setSelectedTransportMode,
   ] = useState<TransportMode | null>(initiallySelectedTransportMode || null);
 
   function handleSelect(transportMode: TransportMode) {
+    if (transportMode === selectedTransportMode) {
+      onSelect(transportMode);
+    }
     setSelectedTransportMode(transportMode);
-    onSelect(transportMode);
   }
 
   return (
@@ -45,9 +47,8 @@ function TransportModeSelector({
           <div key={mode} className="TransportModeSelector-mode-wrapper">
             <Button
               className="TransportModeSelector-mode"
-              variant="dark"
+              variant={isSelected ? "secondary" : "dark"}
               onClick={() => handleSelect(transportMode)}
-              disabled={isSelected}
             >
               {icon && (
                 <div className="TransportModeSelector-mode-icon">
@@ -80,7 +81,7 @@ type TransportModeDetailsProps = {
 
 function TransportModeDetails({
   transportMode,
-  googlePlaceId
+  googlePlaceId,
 }: TransportModeDetailsProps) {
   const [durationInMs, setDurationInMs] = useState<number | null>(null);
   const { position } = usePosition(null, null);

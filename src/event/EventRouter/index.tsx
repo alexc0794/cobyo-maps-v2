@@ -1,8 +1,8 @@
 import React from "react";
-import { Switch, Redirect, Route, useRouteMatch } from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import { CAMERA_TAB } from "../EventPage/EventPageNav";
-import CameraPage from "../../ar/CameraPage";
+// import CameraPage from "../../ar/CameraPage";
 
 import EventPage from "../EventPage";
 

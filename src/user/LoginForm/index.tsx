@@ -7,22 +7,24 @@ import usePhoneNumber from "../../hooks/usePhoneNumber";
 import "./index.css";
 
 type LoginFormProps = {
-  initialName: string | null;
-  initialPhoneNumber: string | null;
-  onLogin: ({
-    phoneNumber,
-    name,
-  }: {
-    phoneNumber: string;
-    name: string;
-  }) => void;
+  onLogin: ({ phoneNumber, name }: LoginInfo) => void;
 };
 
-function LoginForm({
-  initialName,
-  initialPhoneNumber,
-  onLogin,
-}: LoginFormProps) {
+export type LoginInfo = {
+  phoneNumber: string;
+  name: string;
+};
+
+const localStorageLoginInfo = window.localStorage.getItem("login");
+const initialLoginInfo: LoginInfo | null = localStorageLoginInfo
+  ? JSON.parse(localStorageLoginInfo)
+  : null;
+
+function LoginForm({ onLogin }: LoginFormProps) {
+  const initialName = initialLoginInfo ? initialLoginInfo.name : null;
+  const initialPhoneNumber = initialLoginInfo
+    ? initialLoginInfo.phoneNumber
+    : null;
   const [name, setName] = useState<string>(initialName || "");
   const {
     phoneNumber,
@@ -40,8 +42,9 @@ function LoginForm({
   }
 
   async function handleSubmit() {
-    console.log(`Logging in as ${name}: ${phoneNumber}`);
-    onLogin({ phoneNumber, name });
+    const loginInfo: LoginInfo = { phoneNumber, name };
+    window.localStorage.setItem("login", JSON.stringify(loginInfo));
+    onLogin(loginInfo);
   }
 
   return (

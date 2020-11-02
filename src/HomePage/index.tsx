@@ -43,11 +43,7 @@ function HomePage() {
       <>
         <div className="HomePage-logo"></div>
         <div className="HomePage-login">
-          <LoginForm
-            initialName=""
-            initialPhoneNumber=""
-            onLogin={(args) => dispatch(login(args))}
-          />
+          <LoginForm onLogin={(args) => dispatch(login(args))} />
         </div>
       </>
     );
